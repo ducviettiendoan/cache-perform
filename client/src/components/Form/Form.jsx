@@ -3,9 +3,8 @@ import { TextField, Button, Typography, Paper } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import FileBase from "react-file-base64";
 import useStyles from "./styles";
-// import { createPost, updatePost } from '../../actions/posts';
 import { connect } from "react-redux";
-import { createPost } from "../actions/posts";
+import { createPost, updatePost } from "../actions/posts";
 
 const Form = (props) => {
   const { currentId, setCurrentId } = props;
@@ -16,15 +15,18 @@ const Form = (props) => {
     tags: "",
     selectedFile: "",
   });
-  const post = useSelector((state) =>
-    currentId ? state.posts.find((message) => message._id === currentId) : null
-  );
+  // const post = useSelector((state) =>
+  //   currentId ? state.posts.find((message) => message._id === currentId) : null
+  // );
+  const post = currentId ? props.posts.find((message) => message._id === currentId) : null;
   const dispatch = useDispatch();
   const classes = useStyles();
 
   useEffect(() => {
     if (post) setPostData(post);
   }, [post]);
+
+  console.log(currentId);
 
   const clear = () => {
     setCurrentId(0);
@@ -39,14 +41,13 @@ const Form = (props) => {
 
     const handleSubmit = async (e) => {
       e.preventDefault();
-      props.createPost(postData);
-      // if (currentId === 0) {
-      //   dispatch(createPost(postData));
-      //   clear();
-      // } else {
-      //   dispatch(updatePost(currentId, postData));
-      //   clear();
-      // }
+      if (currentId === 0) {
+        props.createPost(postData);
+        clear();
+      } else {
+        props.updatePost(currentId, postData);
+        clear();
+      }
     };
 
   return (
@@ -140,7 +141,8 @@ const mapStateToProps = ({ posts }) => {
 };
 
 const mapDispatchToProps = {
-  createPost
+  createPost,
+  updatePost
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Form);

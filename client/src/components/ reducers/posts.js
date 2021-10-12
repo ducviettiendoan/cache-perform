@@ -27,6 +27,13 @@ const posts = (state = initialState, action) => {
         posts: state.posts.filter((post) => post._id !== action.payload),
         reload: !state.reload,
       };
+    case "UPDATE_POST":
+      return {
+        ...state,
+        loading: false,
+        posts: state.posts.map((post) => post._id === action.payload.data.id ? action.payload.data : post),
+        reload: !state.reload,
+      };
     default:
       return state; 
   }
