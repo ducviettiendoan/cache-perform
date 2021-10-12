@@ -13,11 +13,11 @@ const App = (props) => {
   // const dispatch = useDispatch();
   const classes = useStyles();
 
-  // useEffect(()=>{
-  //   props.getPosts();
-  // },[currentId]);
+  useEffect(()=>{
+    props.getPosts();
+  },[props.reload]);
 
-  console.log(props.posts);
+  console.log(props.reload);
 
   return (
     <Container maxWidth="lg">
@@ -44,6 +44,7 @@ const App = (props) => {
 const mapStateToProps = ({ posts }) => {
   return {
     posts: posts.posts,
+    reload: posts.reload,
   };
 };
 

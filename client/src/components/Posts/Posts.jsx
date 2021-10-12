@@ -11,7 +11,7 @@ const Posts = (props) => {
   // const posts = useSelector((state) => state.posts);
   React.useEffect(()=>{
     props.getPosts();
-  },[props.posts]);
+  },[props.reload]);
   const classes = useStyles();
 
   return (
@@ -29,7 +29,8 @@ const Posts = (props) => {
 
 const mapStateToProps = ({posts}) => {
   return {
-    posts: posts.posts
+    posts: posts.posts,
+    reload: posts.reload,
   }
 };
 

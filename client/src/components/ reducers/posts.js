@@ -2,6 +2,7 @@ const initialState = {
   loading: true,
   error: "",
   posts: [],
+  reload: false,
 };
 
 const posts = (state = initialState, action) => {
@@ -16,10 +17,18 @@ const posts = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        posts: [...posts, action.payload.data],
+        posts: [...state.posts, action.payload.data],
+        reload: !state.reload,
+      };
+    case "DELETE_POST":
+      return {
+        ...state,
+        loading: false,
+        posts: state.posts.filter((post) => post._id !== action.payload),
+        reload: !state.reload,
       };
     default:
-      return state;
+      return state; 
   }
 };
 
