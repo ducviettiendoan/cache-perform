@@ -22,7 +22,7 @@ mongoose.connect(CONNECT_URI, { useNewUrlParser: true, useUnifiedTopology: true}
     .then(()=>console.log("Server is connected to MongoDB"))
     .catch((err) => console.log(err.message))
 
-mongoose.set('useFindAndModify', false);
+// mongoose.set('useFindAndModify', false);
 app.listen(PORT, ()=> {
     console.log(`Server is running in PORT ${PORT}`)
 })
