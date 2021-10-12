@@ -5,7 +5,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import moment from 'moment';
 import {connect} from 'react-redux';
-import { deletePost } from '../../api/posts';
+import { deletePost } from '../../actions/posts';
 import { useDispatch } from 'react-redux';
 
 // import { likePost, deletePost } from '../../../actions/posts';
@@ -17,8 +17,8 @@ const Post = (props) => {
   const classes = useStyles();
   console.log(post._id);
 
-  const handleDeletePost = (e) => {
-    props.deletePost(e._id);
+  const handleDeletePost = () => {
+    props.deletePost(post._id);
   }
   return (
     <Card className={classes.card}>
