@@ -2,14 +2,28 @@ const express = require("express");
 const router = express.Router();
 const PostModel = require("../models/posts");
 const mongoose = require("mongoose");
+const Redis = require("redis"); //using Redis 3.1.2 version. Above 4. version callback func does not work
+
+const redisClient = Redis.createClient()
+redisClient.on('connect', () => console.log('connected to redis'));
 
 router.get("/", async (req, res) => {
-    try {
-        const posts = await PostModel.find();
-        return res.status(200).json(posts);
-    } catch (err) {
-        return res.status(404).json({ message: err.message })
-    }
+    redisClient.get("posts", async (error, posts)=>{
+        if (error) console.error(error);
+        if (posts){
+            console.log("has redis key");
+            return res.status(200).json(JSON.parse(posts))
+        }else{
+            console.log("create redis key");
+            try {
+                const posts = await PostModel.find();
+                redisClient.set('posts', JSON.stringify(posts))
+                return res.status(200).json(posts);
+            } catch (err) {
+                return res.status(404).json({ message: err.message })
+            }
+        }
+    })
 })
 
 router.post("/add", async (req, res) => {
