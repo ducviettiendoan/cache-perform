@@ -16,7 +16,7 @@ app.use("/posts", postRoute);
 
 const CONNECT_URI = "mongodb+srv://tienduc02:tienduc2002@cluster0.bccsv.mongodb.net/blogs?retryWrites=true&w=majority"
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 8000;
 
 mongoose.connect(CONNECT_URI, { useNewUrlParser: true, useUnifiedTopology: true})
     .then(()=>console.log("Server is connected to MongoDB"))
